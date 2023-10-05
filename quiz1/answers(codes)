@@ -1,0 +1,150 @@
+1. 
+공학도로서 창의성을 발휘할 수 있도록 한다.
+아두이노를 활용하여 IoT 관련 생활에 유용한 제품을 만들 수 있다.
+사물 인터넷을 스마트폰 앱으로 무선 제어 할 수 있다.
+로봇을 스마트폰으로 구동하고 원하는 위치로 제어할 수 있다.
+팀과 협업하고 잘 소통할 수 있는 기초를 다진다.
+
+2.
+단계 1: 시스템 설계
+
+목표 정의: 스마트폰으로 집의 전등을 원격으로 제어하는 것이 목표입니다.
+하드웨어 선택: 아두이노, 릴레이 모듈, Wi-Fi 모듈을 선택합니다. 릴레이 모듈은 전등 회로를 열고 닫는 데 사용됩니다.
+아두이노 프로그래밍: 아두이노에 필요한 코드를 작성합니다. 코드는 Wi-Fi 모듈을 통해 스마트폰과 통신하고, 릴레이 모듈을 제어합니다.
+
+단계 2: 하드웨어 설치
+
+전등과 릴레이 연결: 아두이노와 릴레이 모듈을 사용하여 전등 회로에 연결합니다. 릴레이 모듈은 전등의 전원을 끄고 켤 수 있게 합니다.
+전원 연결: 아두이노와 릴레이 모듈에 전원을 연결합니다.
+Wi-Fi 모듈 설정: Wi-Fi 모듈을 설정하여 Wi-Fi 네트워크에 연결합니다. 이를 통해 스마트폰 앱과 통신할 수 있습니다.
+
+단계 3: 아두이노 코드 작성
+
+아두이노 코드 작성: 아두이노에 필요한 코드를 작성합니다. 코드는 Wi-Fi 모듈과 릴레이 모듈을 초기화하고, 스마트폰 앱에서 받은 명령에 따라 릴레이를 제어합니다.
+
+단계 4: 스마트폰 애플리케이션 사용
+
+앱 설치 및 로그인: 스마트폰에 스마트폰 앱을 설치하고 필요한 계정으로 로그인합니다.
+디바이스 등록: 앱에서 아두이노 기기를 등록합니다. 이를 통해 앱은 아두이노와 통신할 수 있게 됩니다.
+전등 제어: 앱을 사용하여 전등을 켜거나 끕니다. 스마트폰을 통해 전등의 상태를 확인하고 필요한 작업을 수행할 수 있습니다.
+
+3.
+
+아두이노 코드
+
+void setup() {
+  pinMode(11, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+
+void loop() {
+  int a = digitalRead(11);
+  Serial.println(a);
+  delay(1000);
+}
+
+프로세싱 코드
+
+import processing.serial.*;
+import processing.net.*;
+Server s;
+Client c;
+Serial p;
+void setup(){
+  p = new Serial(this,"COM3",9600);
+  s = new Server(this, 12345);
+}
+void draw(){
+  c =s.available();
+  if(c!=null){
+    String m=c.readString();
+    m = m.substring(m.length()-1);
+    p.write(m);
+    if(m.indexOf("2")==0) background(0,0,0);
+    if(m.indexOf("1")==0) background(0,255,0);
+  }
+}
+4.
+
+프로세싱 코드
+
+import processing.serial.*;
+Serial p;  
+void setup() 
+{
+  p = new Serial(this, "COM3", 9600);
+  textSize(64);
+}
+void draw() { 
+}
+void keyPressed(){
+  background(0);
+  text(key,10,70);
+  p.write(key);
+}
+
+앱인벤터
+
+서버에서 web1을 통해 보낸 코드를 받았을때, 그것이 1인지 확인하게 설정,
+만약 1일시 바탕화면을 파랗게, 아닐시 빨갛게 설정함.
+
+5.
+
+아두이노 코드
+int ledPin = 7;
+int speakerPin = 4;
+
+int melody[] = {523,587,659,698,783,880,987,1046};
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  pinMode(speakerPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char command = Serial.read();
+    if (command == '9') {
+      digitalWrite(ledPin, HIGH);
+    } else if (command == '0') {
+      digitalWrite(ledPin, LOW);
+    } else if (command = '1' && command <= '8') {
+      int noteIndex = command;
+      playMelody(speakerPin, melody[noteIndex]);
+    }
+  }
+}
+
+void playMelody(int melodyPin, int note) {
+  tone(melodyPin, note);
+  delay(500);
+  noTone(melodyPin);
+  delay(100);
+}
+
+프로세싱 코드
+
+import processing.serial.*;
+import processing.net.*;
+Server s;
+Client c;
+Serial p;
+void setup(){
+  p = new Serial(this,"COM3",9600);
+  s = new Server(this, 12345);
+}
+void draw(){
+  c =s.available();
+  if(c!=null){
+    String m=c.readString();
+    m = m.substring(m.length()-1);
+    p.write(m);
+  }
+}
+
+앱인벤터
+
+버튼1을 클릭했을때, web1을 통해 텍스트 '0'을 보내게 설정하여 LED가 켜지게 설정,
+버튼2를 클릭했을때, web1을 통해 텍스트 '9'룰 보내게 설정하여 LED가 꺼지게 설정,
+버튼3을 클릭했을때, web1을 통해 text box1에 적혀있는 텍스트를 보내게 설정하여 1~8까지의 텍스트를 보냈을때 도에서 높은 도까지 나오게 설정.
