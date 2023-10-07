@@ -1,0 +1,53 @@
+아두이노 코드
+
+void setup() {
+  pinMode(13, OUTPUT);
+  pinMode(4, INPUT_PULLUP);
+  Serial.begin(9600);
+}
+void loop() {
+  if(Serial.available()>0){
+    char v = Serial.read();
+    if(v=='0') digitalWrite(13, HIGH);
+    if(v=='1') digitalWrite(13,LOW);
+    if(v=='2') 
+    {
+      tone(4, 523, 500); 
+      delay(500);
+      tone(4, 523, 500);
+      delay(500);
+      tone(4, 783, 500);
+      delay(500);
+      tone(4, 783, 500);
+      delay(500);
+      tone(4, 880, 500);
+      delay(500);
+      tone(4, 880, 500);
+      delay(500);
+      tone(4, 783, 500);
+      delay(500);
+      noTone(4);
+    }
+  }
+}
+
+프로세싱 코드
+
+import processing.serial.*;
+import processing.net.*;
+Server s;
+Client c;
+Serial p;
+void setup(){
+  p = new Serial(this,"COM3",9600);
+  s = new Server(this, 12345);
+}
+void draw(){
+  c =s.available();
+  if(c!=null){
+    String m=c.readString();
+    m = m.substring(m.length()-1);
+    p.write(m);
+  }
+}
+
