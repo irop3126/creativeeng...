@@ -1,5 +1,9 @@
+먼저, 아두이노와 컴퓨터를 연결하는 USB to 
+
+
 아두이노 코드
 
+```c++
 int s = 11;  // 스위치 핀 번호
 int l = 13; // LED 핀 번호
 
@@ -36,10 +40,10 @@ void playSong() {
   }
   noTone(4);  // 소리 중지
 }
-
+```
 
 프로세싱 코드
-
+```java
 import processing.net.*;
 import processing.serial.*;
 
@@ -81,6 +85,7 @@ void draw() {
     print(msg);  // 메시지를 출력
   }
 }
+```
 
 앱인벤터
 
