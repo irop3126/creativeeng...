@@ -2,6 +2,7 @@
 ![20231011_182523](https://github.com/irop3126/creativeeng.../assets/127822814/4c4afd9e-bc69-4a8b-8c53-b05e637ec022)
 
 2.아두이노에서 측정된 온도센서가 보내는 데이터를 서버가 잘 받아서 화면에 출력중인 사진입니다.
+
 ![console](https://github.com/irop3126/creativeeng.../assets/127822814/20c90f63-e7e4-44c9-b097-9079dcbd6b9d)
 
 3.코드들
